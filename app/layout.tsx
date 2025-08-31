@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mona_Sans } from "next/font/google";
 import "./globals.css";
+import Footer from '@/components/Footer'
 import { Toaster } from "sonner";
 
 const monaSans = Mona_Sans({
@@ -27,6 +28,7 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
+        <Footer/>
       </body>
     </html>
   );
