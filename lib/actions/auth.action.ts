@@ -63,6 +63,7 @@ export async function setSessionCookie(idToken:string){
 export async function signIn(params:SignInParams){
     const {email,idToken}=params
     try {
+        
         const userRecord=await auth.getUserByEmail(email);
         if(!userRecord){
             return{
@@ -71,11 +72,15 @@ export async function signIn(params:SignInParams){
             }
         }
         await setSessionCookie(idToken);
+        /*return {
+            success: true,
+            message: 'Successfully signed in'
+        }*/
     } catch (error) {
         console.log(error);
         return{
             success:false,
-            message:'Failed to log into an account'
+            message:'Failed to log into an account.Please try again!.'
         }
     }
 }
