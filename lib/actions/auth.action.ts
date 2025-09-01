@@ -72,10 +72,7 @@ export async function signIn(params:SignInParams){
             }
         }
         await setSessionCookie(idToken);
-        /*return {
-            success: true,
-            message: 'Successfully signed in'
-        }*/
+        
     } catch (error) {
         console.log(error);
         return{
