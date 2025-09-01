@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from "@/firebase/admin"
-import { success } from "zod"
+import { User, SignUpParams, SignInParams } from "@/types"
 
 import { auth } from "@/firebase/admin"
 

@@ -20,6 +20,7 @@ import FormField from "./FormField";
 
 
 import { signIn, signUp } from "@/lib/actions/auth.action";
+import { FormType } from "@/types";
 
 import { auth } from "@/firebase/client";
 
