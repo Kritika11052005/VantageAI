@@ -84,8 +84,6 @@ function Agent({ userName, userId, type }: AgentProps) {
         username: userName,
         userId: userId,
       },
-      clientMessages: [],
-      serverMessages: [],
     });
   };
 
