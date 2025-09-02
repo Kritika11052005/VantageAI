@@ -2,11 +2,12 @@ import {generateText} from "ai";
 import {google} from "@ai-sdk/google";
 import { getRandomInterviewCover } from "@/lib/utils";
 import { db } from "@/firebase/admin";
+import {NextRequest} from "next/server";
 export async function GET(){
     return Response.json({success:true,data:"THANK YOU!"},{status:200});
     
 }
-export async function POST(request:Request){
+export async function POST(request:NextRequest){
     const{type,role,level,techstack,amount,userid }=await request.json();
     try {
         const {text:questions}=await generateText({
@@ -25,6 +26,7 @@ export async function POST(request:Request){
         Thank you! <3
     `,
         });
+        console.log(questions);
         const interview={
             role,
             type,
@@ -34,14 +36,15 @@ export async function POST(request:Request){
             userId:userid,
             finalized:true,
             coverImage:getRandomInterviewCover(),
-            createdAt:new Date().toISOString()
+            createdAt:new Date().toISOString(),
+            updatedAt:new Date().toISOString()
             }
             await db.collection('interviews').add(interview);
-            return Response.json({success:true},{status:200});
+            return Response.json({success:true,questions:questions},{status:200});
 
     } catch (error) {
         console.error(error);
-        return Response.json({success:false,error},{status:500});
+        return Response.json({success:false,error:"Internal Server Error"},{status:500});
 
     }
 }

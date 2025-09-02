@@ -96,7 +96,7 @@ function Agent({ userName, userId, type }: AgentProps) {
 
   const latestMsg = messages[messages.length - 1]?.content;
 
-  const isInativeOrFinished =
+  const isInactiveOrFinished =
     callStatus === CallStatus.FINISHED || callStatus === CallStatus.INACTIVE;
 
   return (
@@ -125,7 +125,7 @@ function Agent({ userName, userId, type }: AgentProps) {
               height={540}
               className="object-cover rounded-full size-[120px]"
             />
-            {/* {isSpeaking && <span className="animate-speak" />} */}
+            {isSpeaking && <span className="animate-speak" />} 
 
             <h3>{userName}</h3>
           </div>
@@ -157,7 +157,7 @@ function Agent({ userName, userId, type }: AgentProps) {
                 callStatus !== CallStatus.CONNECTING && "hidden"
               )}
             />
-            <span>{isInativeOrFinished ? "Call" : ". . . "}</span>
+            <span>{isInactiveOrFinished ? "Call" : ". . . "}</span>
           </button>
         ) : (
           <button className="btn-disconnect" onClick={handleDisconnect}>
