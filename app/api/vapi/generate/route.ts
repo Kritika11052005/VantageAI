@@ -31,11 +31,11 @@ export async function POST(request:NextRequest){
             role,
             type,
             level,
-            username: username || 'Unknown',
-            techstack:techstack.split(','),
+            techstack: techstack?.split(",")||[],
             questions:JSON.parse(questions),
             userId:userid,
             finalized:true,
+            username: username || 'Unknown',
             coverImage:getRandomInterviewCover(),
             createdAt:new Date().toISOString(),
             updatedAt:new Date().toISOString()
