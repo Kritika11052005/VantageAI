@@ -24,6 +24,7 @@ const ASSISTANT = process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID;
 function Agent({ userName, userId, type }: AgentProps) {
   const router = useRouter();
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isAssistantSpeaking, setIsAssistantSpeaking] = useState(false);
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
 
@@ -43,8 +44,14 @@ function Agent({ userName, userId, type }: AgentProps) {
       }
     };
 
-    const onSpeechStart = () => setIsSpeaking(true);
-    const onSpeechEnd = () => setIsSpeaking(false);
+    const onSpeechStart = () => {
+      setIsSpeaking(true);
+    };
+
+    const onSpeechEnd = () => {
+      setIsSpeaking(false);
+      setIsAssistantSpeaking(false);
+    };
 
     const onErr = (e: Error) => console.log("Error ", e);
 
@@ -64,7 +71,20 @@ function Agent({ userName, userId, type }: AgentProps) {
       vapi.off("error", onErr);
     };
   }, []);
-
+  // Determine who is speaking based on the latest message
+  useEffect(() => {
+    if (messages.length > 0) {
+      const latestMessage = messages[messages.length - 1];
+      if (latestMessage.role === "assistant") {
+        setIsAssistantSpeaking(true);
+        // Auto-stop assistant speaking after a delay (adjust as needed)
+        const timer = setTimeout(() => {
+          setIsAssistantSpeaking(false);
+        }, 3000);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [messages]);
   useEffect(() => {
     if (callStatus === CallStatus.FINISHED) {
       router.push("/");
@@ -100,18 +120,18 @@ function Agent({ userName, userId, type }: AgentProps) {
   return (
     <>
       <div className="call-view">
-        <div className="card-interviewer">
+      <div className="card-interviewer">
           <div className="avatar">
             <Image
-              src={"/ai-avatar.png"}
-              alt="ai-avatar"
+              src="/ai-avatar.png"
+              alt="profile-image"
               width={65}
               height={54}
               className="object-cover"
             />
-            {isSpeaking && <span className="animate-speak" />}
+            {isAssistantSpeaking && <span className="animate-speak" />}
           </div>
-          <h3>VantageAI</h3>
+          <h3>AI Interviewer</h3>
         </div>
 
         <div className="card-border">
