@@ -27,11 +27,23 @@ export async function POST(request:NextRequest){
     `,
         });
         console.log(questions);
+        let parsedQuestions;
+try {
+    parsedQuestions = JSON.parse(questions);
+} catch (parseError) {
+    console.error('Failed to parse questions:', parseError);
+    // Fallback: split by newlines if JSON parsing fails
+    parsedQuestions = questions.split('\n').filter(q => q.trim().length > 0);
+}
         const interview={
             role,
             type,
             level,
-            techstack: techstack?.split(",")||[],
+            techstack: techstack && typeof techstack === 'string' 
+    ? techstack.split(",").map(tech => tech.trim()).filter(tech => tech.length > 0)
+    : Array.isArray(techstack) 
+    ? techstack 
+    : [],
             questions:JSON.parse(questions),
             userId:userid,
             finalized:true,
@@ -41,7 +53,10 @@ export async function POST(request:NextRequest){
             updatedAt:new Date().toISOString()
             }
             await db.collection('interviews').add(interview);
-            return Response.json({success:true,questions:questions},{status:200});
+            return Response.json({
+                success: true,
+                questions: parsedQuestions  
+            }, {status: 200});
 
     } catch (error) {
         console.error(error);

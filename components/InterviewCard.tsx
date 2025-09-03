@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 
 import { cn ,getRandomInterviewCover} from "@/lib/utils";
 import DisplayTechIcons from "./DisplayTechIcons";
+import { InterviewCardProps, Feedback } from "@/types";
 //import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
 
 const InterviewCard = async ({
@@ -25,7 +26,7 @@ const InterviewCard = async ({
         })
       : null;*/
 
-  const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
+  const normalizedType: "Behavioral" | "Mixed" | "Technical" = /mix/gi.test(type) ? "Mixed" : type as "Behavioral" | "Mixed" | "Technical";
 
   const badgeColor =
     {
