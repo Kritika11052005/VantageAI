@@ -4,6 +4,7 @@ import {getCurrentUser} from '@/lib/actions/auth.action'
 
 const page = async() => {
   const user=await getCurrentUser();
+  
 
   return (
     <>

@@ -3,8 +3,27 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { dummyInterviews } from '@/constants'
+import { getCurrentUser } from "@/lib/actions/auth.action";
+import {
+  getInterviewsByUserId,
+  getLatestInterviews,
+} from "@/lib/actions/general.action"
+
 import InterviewCard from '@/components/InterviewCard'
-const page = () => {
+const page = async () => {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return <div>Please sign in to view your interviews.</div>;
+  }
+//parallel calling(doubling the speed)(optimization)
+  const [userInterviews, allInterview] = await Promise.all([
+    getInterviewsByUserId(user.id),
+    getLatestInterviews({ userId: user.id }),
+  ]);
+
+  const hasPastInterviews = (userInterviews?.length ?? 0) > 0;
+  const hasUpcomingInterviews = (allInterview?.length ?? 0) > 0;
   return (
     <>
     <section className="card-cta">
@@ -32,10 +51,8 @@ const page = () => {
         <h2>Your Interviews</h2>
 
         <div className="interviews-section">
-          {dummyInterviews.map((interview, index)=>{
-            return <InterviewCard key={interview.id} {...interview}/>
-          })}
-          {/*{hasPastInterviews ? (
+          
+          {hasPastInterviews ? (
             userInterviews?.map((interview) => (
               <InterviewCard
                 key={interview.id}
@@ -49,7 +66,7 @@ const page = () => {
             ))
           ) : (
             <p>You haven&apos;t taken any interviews yet</p>
-          )}*/}
+          )}
         </div>
       </section>
 
@@ -57,10 +74,8 @@ const page = () => {
         <h2>Take Interviews</h2>
 
         <div className="interviews-section">
-        {dummyInterviews.map((interview, index)=>{
-            return <InterviewCard key={interview.id} {...interview}/>
-          })}
-          {/*{hasUpcomingInterviews ? (
+        
+          {hasUpcomingInterviews ? (
             allInterview?.map((interview) => (
               <InterviewCard
                 key={interview.id}
@@ -74,7 +89,7 @@ const page = () => {
             ))
           ) : (
             <p>There are no interviews available</p>
-          )}*/}
+          )}
         </div>
       </section>
     </>

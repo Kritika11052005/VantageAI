@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from "@/firebase/admin"
-import { User, SignUpParams, SignInParams } from "@/types"
+import { User, SignUpParams, SignInParams, Interview } from "@/types"
 
 import { auth } from "@/firebase/admin"
 
@@ -107,4 +107,7 @@ export async function isAuthenticated(){
     const user=await getCurrentUser();
     return !!user;
 }
+
+
+
 
