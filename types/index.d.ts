@@ -2,11 +2,28 @@ export interface Feedback {
     id: string;
     interviewId: string;
     totalScore: number;
-    categoryScores: Array<{
-      name: string;
-      score: number;
-      comment: string;
-    }>;
+    categoryScores: {
+      communicationSkills: {
+        score: number;
+        comment: string;
+      };
+      technicalKnowledge: {
+        score: number;
+        comment: string;
+      };
+      problemSolving: {
+        score: number;
+        comment: string;
+      };
+      culturalFit: {
+        score: number;
+        comment: string;
+      };
+      confidenceAndClarity: {
+        score: number;
+        comment: string;
+      };
+    };
     strengths: string[];
     areasForImprovement: string[];
     finalAssessment: string;
@@ -51,7 +68,7 @@ export interface Feedback {
     userName: string;
     userId?: string;
     interviewId?: string;
-    feedbackId?: string;
+    feedbackId?: string|undefined;
     type: "generate" | "interview";
     questions?: string[];
   }

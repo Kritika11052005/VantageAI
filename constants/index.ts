@@ -109,7 +109,7 @@ export const interviewer: CreateAssistantDTO = {
   },
   voice: {
     provider: "11labs",
-    voiceId: "sarah",
+    voiceId: "Spencer",
     stability: 0.4,
     similarityBoost: 0.8,
     speed: 0.9,
@@ -156,38 +156,32 @@ End the conversation on a polite and positive note.
   },
 };
 
+// Use plain JSON Schema instead of Zod
 export const feedbackSchema = z.object({
-  totalScore: z.number(),
-  categoryScores: z.tuple([
-    z.object({
-      name: z.literal("Communication Skills"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Technical Knowledge"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Problem Solving"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Cultural Fit"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Confidence and Clarity"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-  ]),
-  strengths: z.array(z.string()),
-  areasForImprovement: z.array(z.string()),
-  finalAssessment: z.string(),
+  totalScore: z.number().describe("Overall interview score from 0-100"),
+  communicationSkills: z.object({
+    score: z.number(),
+    comment: z.string()
+  }),
+  technicalKnowledge: z.object({
+    score: z.number(),
+    comment: z.string()
+  }),
+  problemSolving: z.object({
+    score: z.number(),
+    comment: z.string()
+  }),
+  culturalFit: z.object({
+    score: z.number(),
+    comment: z.string()
+  }),
+  confidenceAndClarity: z.object({
+    score: z.number(),
+    comment: z.string()
+  }),
+  strengths: z.array(z.string()).describe("List of candidate strengths"),
+  areasForImprovement: z.array(z.string()).describe("Areas for improvement"),
+  finalAssessment: z.string().describe("Overall assessment summary")
 });
 
 export const interviewCovers = [

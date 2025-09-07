@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { AgentProps } from "@/types";
 import { useRouter } from "next/navigation";
 import { vapi } from "@/lib/vapi.sdk";
-
+import { createFeedback } from "@/lib/actions/general.action";
 enum CallStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
@@ -21,13 +21,18 @@ interface SavedMessage {
 
 const ASSISTANT = process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID;
 
-function Agent({ userName, userId, type }: AgentProps) {
+function Agent({  userName,
+  userId,
+  interviewId,
+  feedbackId,
+  type,
+  questions }: AgentProps) {
   const router = useRouter();
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isAssistantSpeaking, setIsAssistantSpeaking] = useState(false);
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
-
+  const [lastMessage, setLastMessage] = useState<string>("");
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
 
@@ -58,16 +63,20 @@ function Agent({ userName, userId, type }: AgentProps) {
     vapi.on("call-start", onCallStart);
     vapi.on("call-end", onCallEnd);
     vapi.on("message", onMessage);
-    vapi.on("speech-end", onSpeechStart);
-    vapi.on("speech-end", onSpeechEnd);
+    /*vapi.on("speech-end", onSpeechStart);
+    vapi.on("speech-end", onSpeechEnd);*/
+    vapi.on("speech-start", onSpeechStart);
+vapi.on("speech-end", onSpeechEnd);
     vapi.on("error", onErr);
 
     return () => {
       vapi.off("call-start", onCallStart);
       vapi.off("call-end", onCallEnd);
       vapi.off("message", onMessage);
-      vapi.off("speech-end", onSpeechStart);
-      vapi.off("speech-end", onSpeechEnd);
+      /*vapi.off("speech-end", onSpeechStart);
+      vapi.off("speech-end", onSpeechEnd);*/
+      vapi.off("speech-start", onSpeechStart);
+vapi.off("speech-end", onSpeechEnd);
       vapi.off("error", onErr);
     };
   }, []);
@@ -85,11 +94,40 @@ function Agent({ userName, userId, type }: AgentProps) {
       }
     }
   }, [messages]);
+
   useEffect(() => {
-    if (callStatus === CallStatus.FINISHED) {
-      router.push("/");
+    if (messages.length > 0) {
+      setLastMessage(messages[messages.length - 1].content);
     }
-  }, [messages, callStatus, type, userId, router]);
+
+    const handleGenerateFeedback = async (messages: SavedMessage[]) => {
+      console.log("handleGenerateFeedback");
+
+      const { success, feedbackId: id } = await createFeedback({
+        interviewId: interviewId!,
+        userId: userId!,
+        transcript: messages,
+        feedbackId,
+      });
+
+      if (success && id) {
+        router.push(`/interview/${interviewId}/feedback`);
+      } else {
+        console.log("Error saving feedback");
+        router.push("/");
+      }
+    };
+
+    if (callStatus === CallStatus.FINISHED) {
+      if (type === "generate") {
+        router.push("/");
+      } else {
+        handleGenerateFeedback(messages);
+      }
+    }
+  }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
+
+
 
   const handleCall = async () => {
     if (!ASSISTANT) {
@@ -98,14 +136,13 @@ function Agent({ userName, userId, type }: AgentProps) {
     }
     
     setCallStatus(CallStatus.CONNECTING);
-
     await vapi.start(ASSISTANT, {
       variableValues: {
         username: userName,
         userId: userId,
       },
     });
-  };
+    }
 
   const handleDisconnect = async () => {
     setCallStatus(CallStatus.FINISHED);
