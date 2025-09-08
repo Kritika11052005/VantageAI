@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🤖 VantageAI – AI-Powered Mock Interview Platform
 
-## Getting Started
+VantageAI is your **personal AI-powered interview coach**.  
+Our platform simulates real-world interview scenarios, asks tailored questions, and delivers instant, in-depth feedback on your performance.  
 
-First, run the development server:
+Whether it’s **HR, technical, coding, or case-based interviews**, VantageAI helps you practice effectively, refine communication, and build confidence.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
+## 📊 Main Page
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
+## 📌 Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 🎯 **Personalized Interview Setup**  
+  - Choose your **tech stack**.  
+  - Select **experience level** (Entry/Fresher, Mid-Level, Senior).  
+  - Pick your **role preference** (Frontend, Backend, AI Developer, etc.).  
+  - Decide the **interview type** (Technical, Behavioral, or Mixed).  
 
-## Learn More
+- 🗣️ **AI-Powered Interviews**  
+  - Conducted in real-time by a **VAPI-powered AI assistant**.  
+  - Tailored questions based on your selections.  
 
-To learn more about Next.js, take a look at the following resources:
+- 📊 **Instant Feedback**  
+  - Get detailed performance feedback on each interview.  
+  - Identify strengths, weaknesses, and improvement areas.  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🔁 **Retake & Improve**  
+  - Retry the same interview multiple times.  
+  - Get updated feedback after every attempt.  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🏗️ Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Frontend:** [Next.js](https://nextjs.org/), [React.js](https://reactjs.org/), [Tailwind CSS](https://tailwindcss.com/)  
+- **AI & Voice:** [VAPI](https://vapi.ai/)  
+- **Backend & Database:** [Firebase](https://firebase.google.com/)  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔐 Authentication Flow
+
+VantageAI uses **Firebase Authentication with Session Cookies** for secure login and persistent sessions.
+
+### Flow:
+1. User signs in via **Email/Google/Facebook**.  
+2. Firebase Auth validates credentials and issues an **ID Token**.  
+3. The **Admin SDK** verifies the token and creates a **Session Cookie**.  
+4. All requests use the session cookie for authentication.  
+5. Admin SDK verifies sessions and fetches user records from **Firestore**.  
+
+### Sequence Diagram
+
+<img width="1658" height="732" alt="image" src="https://github.com/user-attachments/assets/6473f89f-1fd1-4369-8cb8-db5ecfd976aa" />
+
+[Diagram](https://app.eraser.io/workspace/RxZgj1TINDv8zS8A5LCH)
+
+## 🚀 Deployment  
+
+The project is deployed on **Vercel**:  
+👉 [https://vantage-ai-ten.vercel.app/](https://vantage-ai-ten.vercel.app/)  
+
+---
+
+## 🌟 Future Enhancements  
+
+- 📌 Multi-language interview support.  
+- 📌 Dashboard with analytics & progress tracking.  
+- 📌 Integration with coding IDEs for live coding rounds.  
+- 📌 Role-specific question banks curated by industry experts.  
+- 📌 AI-driven scoring system with percentile benchmarks.
+
+## 📜 License
+
+This project is licensed under the MIT License.
