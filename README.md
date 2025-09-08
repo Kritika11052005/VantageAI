@@ -7,6 +7,9 @@ Whether it’s **HR, technical, coding, or case-based interviews**, VantageAI he
 
 ---
 ## 📊 Main Page
+<img width="1918" height="922" alt="image" src="https://github.com/user-attachments/assets/41301643-a36d-4cce-94b0-c9c25a629abf" />
+
+<img width="1919" height="933" alt="image" src="https://github.com/user-attachments/assets/d753f46e-87a4-49c3-acac-3b827323872e" />
 
 
 ---
