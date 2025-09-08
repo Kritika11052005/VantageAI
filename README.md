@@ -5,6 +5,9 @@ Our platform simulates real-world interview scenarios, asks tailored questions, 
 
 Whether it’s **HR, technical, coding, or case-based interviews**, VantageAI helps you practice effectively, refine communication, and build confidence.
 
+![gif](https://github.com/user-attachments/assets/eb85eafd-97fa-4171-a5dd-0b6e0a0d2e57)
+
+
 ---
 ## 📊 Main Page
 <img width="1918" height="922" alt="image" src="https://github.com/user-attachments/assets/41301643-a36d-4cce-94b0-c9c25a629abf" />
