@@ -1,4 +1,4 @@
-// components/Footer.jsx (Static version - not fixed to bottom)
+
 import React from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
 
@@ -19,7 +19,7 @@ const Footer = () => {
         {/* Social links */}
         <div className="flex gap-3">
           <a
-            href="https://github.com/kritikabenjwal"
+            href="https://github.com/Kritika11052005"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center w-10 h-10 rounded-full bg-dark-200/50 border border-border text-light-100 hover:bg-primary-200/10 hover:border-primary-200/30 hover:text-primary-200 transition-all duration-300 hover:-translate-y-0.5"
@@ -28,7 +28,7 @@ const Footer = () => {
             <Github size={18} />
           </a>
           <a
-            href="https://linkedin.com/in/kritikabenjwal"
+            href="https://www.linkedin.com/in/kritika-benjwal/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center w-10 h-10 rounded-full bg-dark-200/50 border border-border text-light-100 hover:bg-primary-200/10 hover:border-primary-200/30 hover:text-primary-200 transition-all duration-300 hover:-translate-y-0.5"
@@ -37,7 +37,7 @@ const Footer = () => {
             <Linkedin size={18} />
           </a>
           <a
-            href="mailto:kritika.benjwal@example.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=ananya.benjwal@gmail.com"
             className="flex items-center justify-center w-10 h-10 rounded-full bg-dark-200/50 border border-border text-light-100 hover:bg-primary-200/10 hover:border-primary-200/30 hover:text-primary-200 transition-all duration-300 hover:-translate-y-0.5"
             aria-label="Email"
           >
